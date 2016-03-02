@@ -9,34 +9,36 @@ public class FunctionAdapterTest {
 
     @org.junit.Test
     public void testToGuava() throws Exception {
-        final java.util.function.Function<Integer, String> javaFunction = new JavaFunction();
-        final Integer input = 51;
-        final String expectedOutput = String.valueOf(input);
-        final com.google.common.base.Function<Integer, String> guavaFunction = FunctionAdapter.toGuava(javaFunction);
-        assertEquals(expectedOutput, guavaFunction.apply(input));
+        final java.util.function.Function<Object, Object> javaFunction = new JavaFunction();
+        final Object input = 51;
+        final com.google.common.base.Function<Object, Object> guavaFunction = FunctionAdapter.toGuava(javaFunction);
+        assertEquals(javaFunction.apply(input), guavaFunction.apply(input));
     }
 
     @org.junit.Test
     public void testFromGuava() throws Exception {
-        final com.google.common.base.Function<Integer, String> guavaFunction = new GuavaFunction();
+        final com.google.common.base.Function<Object, Object> guavaFunction = new GuavaFunction();
         final Integer input = 51;
-        final String expectedOutput = String.valueOf(input);
-        final java.util.function.Function<Integer, String> javaFunction = FunctionAdapter.fromGuava(guavaFunction);
-        assertEquals(expectedOutput, javaFunction.apply(input));
+        final java.util.function.Function<Object, Object> javaFunction = FunctionAdapter.fromGuava(guavaFunction);
+        assertEquals(guavaFunction.apply(input), javaFunction.apply(input));
     }
 
-    private static class GuavaFunction implements com.google.common.base.Function<Integer, String> {
+    private static class GuavaFunction implements com.google.common.base.Function<Object, Object> {
+
         @Override
-        public String apply(Integer input) {
-            return String.valueOf(input);
+        public Object apply(Object input) {
+            return input;
         }
+
     }
 
-    private static class JavaFunction implements java.util.function.Function<Integer, String> {
+    private static class JavaFunction implements java.util.function.Function<Object, Object> {
+
         @Override
-        public String apply(Integer integer) {
-            return String.valueOf(integer);
+        public Object apply(Object o) {
+            return o;
         }
+
     }
 
 
