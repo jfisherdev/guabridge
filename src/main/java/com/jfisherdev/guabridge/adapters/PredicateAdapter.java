@@ -5,6 +5,9 @@ package com.jfisherdev.guabridge.adapters;
  */
 public final class PredicateAdapter {
 
+    private PredicateAdapter() {
+    }
+
     public static <T> com.google.common.base.Predicate<T> toGuava(java.util.function.Predicate<T> javaPredicate) {
         return new GuavaPredicate<>(javaPredicate);
     }
